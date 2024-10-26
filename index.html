@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Entry Platform</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .container {
+            text-align: center;
+            margin: 50px auto;
+            max-width: 600px;
+        }
+        button, .link-button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+        }
+        .link-button {
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            display: inline-block;
+        }
+        button:hover, .link-button:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Territory Data Entry</h1>
+        <form action="process.php" method="post">
+            <label for="temperature">Temperature (°C):</label>
+            <input type="number" id="temperature" name="temperature" required>
+
+            <label for="humidity">Humidity (%):</label>
+            <input type="number" id="humidity" name="humidity" required>
+
+            <label for="rainfall">Rainfall (mm):</label>
+            <input type="number" id="rainfall" name="rainfall" required>
+
+            <label for="vegetation">Vegetation Type:</label>
+            <input type="text" id="vegetation" name="vegetation" required>
+
+            <label for="chemical">Chemical Data:</label>
+            <input type="text" id="chemical" name="chemical" required>
+
+            <label for="biological">Biological Data:</label>
+            <input type="text" id="biological" name="biological" required>
+
+            <label for="soil">Soil Data:</label>
+            <input type="text" id="soil" name="soil" required>
+
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required>
+
+            <button type="submit">Submit</button>
+        </form>
+
+        <!-- Botón para ir a satelite.html -->
+        <a href="satelite.html" class="link-button">Go to Satellite View</a>
+
+        <!-- Botón para ir a dron.html -->
+        <a href="dron.html" class="link-button">Data DRON</a>
+    </div>
+</body>
+</html>
+

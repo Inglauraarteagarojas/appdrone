@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NDVI Trends by Month and Year</title>
+    <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            color: #333;
+        }
+
+        #year-select {
+            display: block;
+            margin: 20px auto;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+
+        #ndvi-chart {
+            width: 90%;
+            max-width: 900px;
+            margin: 20px auto;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #fff;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #image-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #year-image {
+            max-width: 600px;
+            display: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #back-button {
+            display: block;
+            margin: 30px auto;
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #back-button:hover {
+            background-color: #45a049;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>NDVI Trends by Month and Year</h1>
+
+    <!-- Dropdown para seleccionar año -->
+    <select id="year-select"></select>
+
+    <!-- Contenedor para el gráfico -->
+    <div id="ndvi-chart"></div>
+
+    <!-- Contenedor para mostrar la imagen -->
+    <div id="image-container">
+        <img id="year-image" src="" alt="Year Image">
+    </div>
+
+    <!-- Botón para regresar al index -->
+    <button id="back-button" onclick="goBack()">Back to Home</button>
+
+    <script>
+        // Datos para el gráfico
+        const data = [
+            { month: 'Jan', year: 2016, ndvi: 0.395 },
+            { month: 'Jan', year: 2020, ndvi: 0.424 },
+            { month: 'Jan', year: 2021, ndvi: 0.359 },
+            { month: 'Jan', year: 2022, ndvi: 0.372 },
+            { month: 'Jan', year: 2023, ndvi: 0.228 },
+            { month: 'Jan', year: 2018, ndvi: 0.384 },
+            { month: 'Feb', year: 2017, ndvi: 0.356 },
+            { month: 'Feb', year: 2019, ndvi: 0.443 },
+            { month: 'Feb', year: 2020, ndvi: 0.39 },
+            { month: 'Feb', year: 2023, ndvi: 0.23 },
+            { month: 'Mar', year: 2016, ndvi: 0.461 },
+            { month: 'Mar', year: 2018, ndvi: 0.325 },
+            { month: 'Mar', year: 2021, ndvi: 0.462 },
+            { month: 'Dec', year: 2018, ndvi: 0.43 },
+            { month: 'Dec', year: 2021, ndvi: 0.219 },
+            { month: 'Dec', year: 2022, ndvi: 0.219 },
+            { month: 'May', year: 2023, ndvi: 0.136 },
+            { month: 'Jun', year: 2023, ndvi: 0.046 },
+            { month: 'Jun', year: 2022, ndvi: 0.223 },
+            { month: 'Aug', year: 2017, ndvi: 0.457 },
+            { month: 'Aug', year: 2023, ndvi: 0.127 },
+            { month: 'Oct', year: 2018, ndvi: 0.019 },
+            { month: 'Oct', year: 2022, ndvi: 0.129 },
+            { month: 'Oct', year: 2023, ndvi: 0.223 },
+            { month: 'Nov', year: 2021, ndvi: 0.392 },
+        ];
+
+        const imagesByYear = {
+            2016: 'CHINGAZA2016.jpeg',
+            2017: 'chingaza2017.jpeg',
+            2018: 'chingaza2018.png',
+            2019: 'chingaza2019.png',
+            2020: 'chingaza2020.png',
+            2021: 'chingaza2021.png',
+            2022: 'chingaza2022.png',
+            2023: 'chingaza2023.png'
+        };
+
+        const uniqueYears = [...new Set(data.map(item => item.year))];
+
+        function getDataByYear(year) {
+            return data.filter(item => item.year === year);
+        }
+
+        function updateChartAndImage(year) {
+            const filteredData = getDataByYear(year);
+            const trace = {
+                x: filteredData.map(item => item.month),
+                y: filteredData.map(item => item.ndvi),
+                type: 'scatter',
+                mode: 'lines+markers',
+                name: `Year ${year}`
+            };
+
+            const layout = {
+                title: `NDVI Trends for ${year}`,
+                xaxis: {
+                    title: 'Month',
+                    categoryorder: 'array',
+                    categoryarray: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+                },
+                yaxis: { title: 'NDVI Value' }
+            };
+
+            Plotly.newPlot('ndvi-chart', [trace], layout);
+
+            const img = document.getElementById('year-image');
+            if (imagesByYear[year]) {
+                img.src = imagesByYear[year];
+                img.style.display = 'block';
+            } else {
+                img.style.display = 'none';
+            }
+        }
+
+        const dropdown = document.getElementById('year-select');
+        uniqueYears.forEach(year => {
+            const option = document.createElement('option');
+            option.value = year;
+            option.textContent = year;
+            dropdown.appendChild(option);
+        });
+
+        dropdown.onchange = (event) => updateChartAndImage(Number(event.target.value));
+        updateChartAndImage(uniqueYears[0]);
+
+        // Función para regresar al index.html
+        function goBack() {
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+
+</html>
