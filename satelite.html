@@ -11,13 +11,17 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f7f7f7;
+            background-color: #e6f2ff;
         }
 
         h1 {
             text-align: center;
             margin-top: 20px;
-            color: #333;
+            color: #4CAF50;
+            background-color: #e0f7fa;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         #year-select {
@@ -30,10 +34,20 @@
             background-color: #fff;
         }
 
+        #content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 20px;
+            padding: 20px;
+        }
+
         #ndvi-chart {
-            width: 90%;
-            max-width: 900px;
-            margin: 20px auto;
+            width: 50%;
+            max-width: 500px;
+            min-width: 300px;
+            margin: 0 auto;
             border: 1px solid #ddd;
             border-radius: 10px;
             background-color: #fff;
@@ -42,13 +56,12 @@
         }
 
         #image-container {
+            width: 40%;
             text-align: center;
-            margin-top: 20px;
         }
 
         #year-image {
-            max-width: 600px;
-            display: none;
+            max-width: 100%;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
@@ -83,12 +96,14 @@
     <!-- Dropdown para seleccionar año -->
     <select id="year-select"></select>
 
-    <!-- Contenedor para el gráfico -->
-    <div id="ndvi-chart"></div>
+    <div id="content">
+        <!-- Contenedor para el gráfico -->
+        <div id="ndvi-chart"></div>
 
-    <!-- Contenedor para mostrar la imagen -->
-    <div id="image-container">
-        <img id="year-image" src="" alt="Year Image">
+        <!-- Contenedor para mostrar la imagen -->
+        <div id="image-container">
+            <img id="year-image" src="" alt="Year Image">
+        </div>
     </div>
 
     <!-- Botón para regresar al index -->
